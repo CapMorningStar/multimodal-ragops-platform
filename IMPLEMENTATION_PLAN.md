@@ -107,12 +107,12 @@ To strictly prevent credit exhaustion, the platform enforces the following hard 
   - [x] Implement `src/ingestion/pipeline.py`: Ingestion coordinator that saves structured chunks (text, table markdown, image references) into JSONL/Parquet.
   - [x] Implement unit tests in `tests/unit/test_docai_parser.py` with mock Document AI payloads.
 
-- [ ] **Phase 3: Vertex AI Multimodal Embeddings & Zero-Idle-Burn Vector Store**
-  - [ ] Implement `src/vector_store/embeddings.py`: Wraps Vertex AI `multimodalembedding@001` to generate normalized 1408-dim embeddings for text and images.
-  - [ ] Implement `src/vector_store/base.py`: Abstract VectorStore interface for vector indexing, metadata filtering, and similarity search.
-  - [ ] Implement `src/vector_store/local_store.py`: File-backed vector store using NumPy cosine similarity / ScaNN with Parquet metadata persistence.
-  - [ ] Implement automated chunk indexing script to ingest sample multimodal PDF documents into the local index.
-  - [ ] Implement unit tests in `tests/unit/test_embeddings.py` and `tests/unit/test_local_store.py`.
+- [x] **Phase 3: Vertex AI Multimodal Embeddings & Zero-Idle-Burn Vector Store**
+  - [x] Implement `src/vector_store/embeddings.py`: Wraps Vertex AI `multimodalembedding@001` to generate normalized 1408-dim embeddings for text and images.
+  - [x] Implement `src/vector_store/base.py`: Abstract VectorStore interface for vector indexing, metadata filtering, and similarity search.
+  - [x] Implement `src/vector_store/local_store.py`: File-backed vector store using NumPy cosine similarity / ScaNN with Parquet metadata persistence.
+  - [x] Implement automated chunk indexing script to ingest sample multimodal PDF documents into the local index.
+  - [x] Implement unit tests in `tests/unit/test_embeddings.py` and `tests/unit/test_local_store.py`.
 
 - [ ] **Phase 4: LangGraph Corrective RAG (CRAG) Orchestration & State Machine**
   - [ ] Implement `src/crag/state.py`: Define `CRAGState` (TypedDict) with keys for `query`, `retrieved_docs`, `extracted_images`, `relevance_scores`, `transformed_query`, `web_search_results`, and `final_response`.
