@@ -17,10 +17,13 @@ class RewriterNode:
 
     def _rewrite(self, original_query: str, retry_count: int) -> str:
         """Transforms query by focusing on core semantic concepts."""
-        # Clean query
-        stopwords = {"what", "is", "the", "how", "much", "did", "were", "tell", "me", "about", "can", "you", "show"}
+        stopwords = {
+            "what", "is", "was", "are", "were", "the", "how", "much", "did", "tell",
+            "me", "about", "can", "you", "show", "for", "and", "in", "of", "to", "a", "an"
+        }
         tokens = original_query.lower().split()
-        filtered = [t for t in tokens if t not in stopwords and len(t) > 2]
+        cleaned_tokens = [t.strip("?,.:;!") for t in tokens]
+        filtered = [t for t in cleaned_tokens if t not in stopwords and len(t) > 2]
 
         if retry_count == 0:
             # First reformulation: focus on core enterprise keywords
@@ -28,7 +31,7 @@ class RewriterNode:
         else:
             # Subsequent reformulation: expand with financial/operational domain terms
             base = " ".join(filtered) if filtered else original_query
-            return f"{base} overview metrics figures"
+            return f"{base} financial metrics overview"
 
     def __call__(self, state: CRAGState) -> Dict[str, Any]:
         """Rewrites the query and increments retry count."""
