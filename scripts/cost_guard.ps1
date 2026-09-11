@@ -19,7 +19,7 @@ if (-not $Project) {
 
 if (-not $Project) {
     Write-Host "[SKIP] gcloud not authenticated or project not set. Skipping live GCP API audit." -ForegroundColor Yellow
-    Write-Host "[PASS] Verified local development store is file-backed (data/vector_index). Idle cost is $0.00." -ForegroundColor Green
+    Write-Host "[PASS] Verified local development store is file-backed (data/vector_index). Idle cost is `$0.00." -ForegroundColor Green
     exit 0
 }
 
