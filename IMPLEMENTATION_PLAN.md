@@ -114,16 +114,16 @@ To strictly prevent credit exhaustion, the platform enforces the following hard 
   - [x] Implement automated chunk indexing script to ingest sample multimodal PDF documents into the local index.
   - [x] Implement unit tests in `tests/unit/test_embeddings.py` and `tests/unit/test_local_store.py`.
 
-- [ ] **Phase 4: LangGraph Corrective RAG (CRAG) Orchestration & State Machine**
-  - [ ] Implement `src/crag/state.py`: Define `CRAGState` (TypedDict) with keys for `query`, `retrieved_docs`, `extracted_images`, `relevance_scores`, `transformed_query`, `web_search_results`, and `final_response`.
-  - [ ] Implement `src/crag/nodes/retriever.py`: Hybrid multimodal retriever querying text and visual embeddings.
-  - [ ] Implement `src/crag/nodes/grader.py`: Evaluator agent using Gemini Flash structured outputs to classify document relevance as `RELEVANT`, `PARTIALLY_RELEVANT`, or `NOT_RELEVANT`.
-  - [ ] Implement `src/crag/nodes/rewriter.py`: Query reformulation node optimizing keywords for secondary retrieval.
-  - [ ] Implement `src/crag/nodes/fallback.py`: Web search fallback node when local documents do not satisfy confidence thresholds.
-  - [ ] Implement `src/crag/edges.py`: Conditional routing logic based on grading outcomes.
-  - [ ] Compile complete `src/crag/graph.py` StateGraph and export the visual execution graph.
-  - [ ] Implement unit tests in `tests/unit/test_crag_nodes.py` to verify state transitions.
-  - [ ] **Day 1 Shutdown Verification**: Run cost-guard checklist ensuring $0 running resources.
+- [x] **Phase 4: LangGraph Corrective RAG (CRAG) Orchestration & State Machine**
+  - [x] Implement `src/crag/state.py`: Define `CRAGState` (TypedDict) with keys for `query`, `retrieved_docs`, `extracted_images`, `relevance_scores`, `transformed_query`, `web_search_results`, and `final_response`.
+  - [x] Implement `src/crag/nodes/retriever.py`: Hybrid multimodal retriever querying text and visual embeddings.
+  - [x] Implement `src/crag/nodes/grader.py`: Evaluator agent using Gemini Flash structured outputs to classify document relevance as `RELEVANT`, `PARTIALLY_RELEVANT`, or `NOT_RELEVANT`.
+  - [x] Implement `src/crag/nodes/rewriter.py`: Query reformulation node optimizing keywords for secondary retrieval.
+  - [x] Implement `src/crag/nodes/fallback.py`: Web search fallback node when local documents do not satisfy confidence thresholds.
+  - [x] Implement `src/crag/edges.py`: Conditional routing logic based on grading outcomes.
+  - [x] Compile complete `src/crag/graph.py` StateGraph and export the visual execution graph.
+  - [x] Implement unit tests in `tests/unit/test_crag_nodes.py` to verify state transitions.
+  - [x] **Day 1 Shutdown Verification**: Run cost-guard checklist ensuring $0 running resources.
 
 ---
 
