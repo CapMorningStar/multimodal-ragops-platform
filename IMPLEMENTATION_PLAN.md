@@ -100,12 +100,12 @@ To strictly prevent credit exhaustion, the platform enforces the following hard 
   - [x] Create `scripts/gcp_bootstrap.ps1` and `scripts/gcp_bootstrap.sh` to enable required GCP APIs (`documentai.googleapis.com`, `aiplatform.googleapis.com`, `run.googleapis.com`, `storage.googleapis.com`).
   - [x] Implement unit tests in `tests/unit/test_settings.py` to verify configuration loading and environment validation.
 
-- [ ] **Phase 2: Document AI Layout Parsing, Table Markdown & Chart Cropping**
-  - [ ] Implement `src/ingestion/docai_parser.py`: Client for Document AI Layout Parser handling PDF bytes, pagination, and tokenization.
-  - [ ] Implement `src/ingestion/table_extractor.py`: Converts Document AI table layout structures (cells, row/column spans) into standardized Markdown tables.
-  - [ ] Implement `src/ingestion/chart_cropper.py`: Utilizes PIL/Pillow and normalized bounding polygons to extract and persist charts, figures, and diagrams as clean PNGs with metadata.
-  - [ ] Implement `src/ingestion/pipeline.py`: Ingestion coordinator that saves structured chunks (text, table markdown, image references) into JSONL/Parquet.
-  - [ ] Implement unit tests in `tests/unit/test_docai_parser.py` with mock Document AI payloads.
+- [x] **Phase 2: Document AI Layout Parsing, Table Markdown & Chart Cropping**
+  - [x] Implement `src/ingestion/docai_parser.py`: Client for Document AI Layout Parser handling PDF bytes, pagination, and tokenization.
+  - [x] Implement `src/ingestion/table_extractor.py`: Converts Document AI table layout structures (cells, row/column spans) into standardized Markdown tables.
+  - [x] Implement `src/ingestion/chart_cropper.py`: Utilizes PIL/Pillow and normalized bounding polygons to extract and persist charts, figures, and diagrams as clean PNGs with metadata.
+  - [x] Implement `src/ingestion/pipeline.py`: Ingestion coordinator that saves structured chunks (text, table markdown, image references) into JSONL/Parquet.
+  - [x] Implement unit tests in `tests/unit/test_docai_parser.py` with mock Document AI payloads.
 
 - [ ] **Phase 3: Vertex AI Multimodal Embeddings & Zero-Idle-Burn Vector Store**
   - [ ] Implement `src/vector_store/embeddings.py`: Wraps Vertex AI `multimodalembedding@001` to generate normalized 1408-dim embeddings for text and images.
