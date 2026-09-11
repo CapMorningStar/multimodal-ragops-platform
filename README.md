@@ -77,33 +77,57 @@ flowchart LR
 
 ---
 
-## Quickstart & Environment Setup
+## Quickstart & Execution Guide
 
-### 1. Prerequisites
-- Python 3.11+
-- Google Cloud SDK (`gcloud`)
-- Git
-
-### 2. Setup Virtual Environment
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements-dev.txt
+### 1. Clone & Install
+```bash
+git clone https://github.com/CapMorningStar/multimodal-ragops-platform.git
+cd multimodal-ragops-platform
+pip install -r requirements.txt
 ```
 
-### 3. Configure Credentials
+### 2. Configure Credentials
 Copy the `.env.example` template:
 ```powershell
 cp .env.example .env
-# Edit .env and supply your GCP_PROJECT_ID and credentials
+# Edit .env with your GCP_PROJECT_ID and service_account.json path
 ```
 
-### 4. Run Verification Tests
+### 3. Launch Services
+
+#### Option A: Running Locally (FastAPI + Streamlit Cockpit)
+
+In **Terminal 1** (FastAPI Backend):
 ```powershell
-pytest tests/unit/test_settings.py -v
+python -m uvicorn src.api.app:app --host 127.0.0.1 --port 8000
+```
+*Health Check: `http://127.0.0.1:8000/v1/health`*  
+*Swagger Documentation: `http://127.0.0.1:8000/docs`*
+
+In **Terminal 2** (Streamlit Multimodal UI):
+```powershell
+streamlit run src/ui/app.py --server.port 8501
+```
+*Cockpit UI: `http://localhost:8501`*
+
+#### Option B: Launching via Docker Compose
+```powershell
+docker-compose up --build
+```
+
+### 4. Run Automated Evaluation & Cost Guard
+```powershell
+# Run full 39-test suite (100% pass rate)
+pytest tests/ -v
+
+# Run Ragas CI/CD benchmark runner
+python -m src.evals.benchmark_runner --output eval_report.md
+
+# Run zero-idle-burn cost audit
+python scripts/cost_guard.py
 ```
 
 ---
 
 ## Master Implementation Plan
-For step-by-step progress, open and review [IMPLEMENTATION_PLAN.md](file:///d:/Projects/GCP/IMPLEMENTATION_PLAN.md).
+For step-by-step progress, architecture decisions, and live verification logs, review [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md).

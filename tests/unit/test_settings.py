@@ -5,9 +5,12 @@ from pydantic import ValidationError
 from config.settings import Settings, VectorStoreBackend
 
 
-def test_default_settings():
+def test_default_settings(monkeypatch):
     """Verify that default settings instantiate with expected defaults."""
-    cfg = Settings()
+    monkeypatch.delenv("RETRIEVAL_TOP_K", raising=False)
+    monkeypatch.delenv("GCP_PROJECT_ID", raising=False)
+    monkeypatch.delenv("DOCUMENT_AI_PROCESSOR_ID", raising=False)
+    cfg = Settings(_env_file=None)
     assert cfg.gcp_region == "us-central1"
     assert cfg.vector_store_backend == VectorStoreBackend.LOCAL
     assert cfg.budget_limit_usd == 300.00

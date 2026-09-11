@@ -85,7 +85,7 @@ def test_chart_cropper_save(tmp_path: Path):
 
 def test_mock_document_ai_parser(tmp_path: Path):
     """Verify that DocumentAIParser operates gracefully in mock/offline mode."""
-    parser = DocumentAIParser(output_dir=tmp_path)
+    parser = DocumentAIParser(output_dir=tmp_path, processor_id="mock-processor-id")
     mock_pdf_bytes = b"%PDF-1.4 Mock PDF content"
 
     parsed = parser.process_pdf_bytes(mock_pdf_bytes, doc_id="financial_report")
@@ -108,7 +108,8 @@ def test_ingestion_pipeline_run(tmp_path: Path):
     pdf_file = raw_dir / "sample_statement.pdf"
     pdf_file.write_bytes(b"%PDF-1.5 Dummy Enterprise Financials")
 
-    pipeline = IngestionPipeline(raw_dir=raw_dir, processed_dir=processed_dir)
+    mock_parser = DocumentAIParser(output_dir=processed_dir, processor_id="mock-processor-id")
+    pipeline = IngestionPipeline(raw_dir=raw_dir, processed_dir=processed_dir, parser=mock_parser)
     results = pipeline.ingest_all()
 
     assert len(results) == 1

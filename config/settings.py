@@ -152,3 +152,10 @@ class Settings(BaseSettings):
 
 # Global settings singleton
 settings = Settings()
+
+# Automatically sync Google Application Credentials to process environment
+if settings.google_application_credentials:
+    cred_p = Path(settings.google_application_credentials).resolve()
+    if cred_p.exists():
+        import os
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(cred_p)

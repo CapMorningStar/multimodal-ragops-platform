@@ -70,7 +70,7 @@ class VertexMultimodalEmbedder:
         try:
             model = self._get_model()
             embeddings = model.get_embeddings(
-                text=text[:1000],  # vertex limit safe slice
+                contextual_text=text[:1000],  # vertex limit safe slice
                 dimension=self.DIMENSION,
             )
             vec = np.array(embeddings.text_embedding, dtype=np.float32)

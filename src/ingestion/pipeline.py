@@ -26,11 +26,12 @@ class IngestionPipeline:
         self,
         raw_dir: Optional[Path] = None,
         processed_dir: Optional[Path] = None,
+        parser: Optional[DocumentAIParser] = None,
     ):
         self.raw_dir = raw_dir or settings.raw_data_dir
         self.processed_dir = processed_dir or settings.processed_data_dir
         self.processed_dir.mkdir(parents=True, exist_ok=True)
-        self.parser = DocumentAIParser(output_dir=self.processed_dir)
+        self.parser = parser or DocumentAIParser(output_dir=self.processed_dir)
 
     def ingest_document(self, file_path: Path) -> ParsedDocument:
         """Processes a single PDF document and persists its chunks."""

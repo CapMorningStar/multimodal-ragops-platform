@@ -30,16 +30,21 @@ class GeneratorNode:
     ) -> str:
         """Invokes Gemini Flash model with multimodal context."""
         try:
-            import vertexai
-            from vertexai.generative_models import GenerativeModel, Part
+            from google import genai
+            from google.genai import types
 
-            vertexai.init(project=settings.gcp_project_id, location=settings.gcp_region)
-            model = GenerativeModel(self.model_name)
+            client = genai.Client(
+                vertexai=True,
+                project=settings.gcp_project_id,
+                location=settings.gcp_region,
+            )
 
             prompt = (
                 "You are an enterprise document intelligence assistant. Answer the user question strictly using "
-                "the provided text, markdown tables, and charts. Always include explicit inline citations in the "
-                "format [Doc: <doc_id>, Page: <page>, Type: <type>]. If the information is missing, say so.\n\n"
+                "the provided context (text, markdown tables, charts, or web search fallback). Always include explicit inline citations. "
+                "For documents, format as [Doc: <doc_id>, Page: <page>, Type: <type>]. For web search fallback context, cite [Source: Web Search Fallback]. "
+                "If using web search fallback, incorporate facts directly from the Web Search Fallback Context. "
+                "If the information is missing from the provided context, state that you could not find sufficient grounded information.\n\n"
                 f"Question: {query}\n\n"
                 "Context:\n" + "\n\n".join(context_blocks)
             )
@@ -49,11 +54,14 @@ class GeneratorNode:
                 try:
                     with open(img_path, "rb") as f:
                         img_bytes = f.read()
-                    contents.append(Part.from_data(data=img_bytes, mime_type="image/png"))
+                    contents.append(types.Part.from_bytes(data=img_bytes, mime_type="image/png"))
                 except Exception as e:
                     logger.warning(f"Could not load chart {img_path}: {e}")
 
-            response = model.generate_content(contents)
+            response = client.models.generate_content(
+                model=self.model_name,
+                contents=contents,
+            )
             return response.text
         except Exception as e:
             logger.warning(f"Gemini API call failed ({e}). Falling back to local grounded synthesis.")
@@ -69,18 +77,13 @@ class GeneratorNode:
         if not context_blocks:
             return f"I could not find sufficient grounded information in the documents to answer '{query}'."
 
-        lines = [
-            f"Based on the enterprise documents for '{query}':",
-            "",
-        ]
+        cleaned_blocks = []
+        for block in context_blocks[:2]:
+            # Strip citation header for pure factual content
+            lines = [ln for ln in block.splitlines() if not ln.startswith("[Doc:")]
+            cleaned_blocks.append("\n".join(lines).strip())
 
-        for i, block in enumerate(context_blocks[:2], 1):
-            lines.append(f"- {block.strip()}")
-
-        if image_paths:
-            lines.append(f"\nReferenced Visual Assets: {len(image_paths)} chart(s) inspected.")
-
-        return "\n".join(lines)
+        return "\n".join(cleaned_blocks)
 
     def __call__(self, state: CRAGState) -> Dict[str, Any]:
         """Generates grounded final response and citations."""
@@ -115,6 +118,13 @@ class GeneratorNode:
                 f"{doc.get('content')}"
             )
             context_blocks.append(block)
+
+        if not context_blocks:
+            return {
+                "final_response": f"I could not find sufficient grounded information in the documents to answer '{query}'.",
+                "citations": [],
+                "execution_trace": trace,
+            }
 
         if self._is_mock:
             response_text = self._mock_synthesis(query, context_blocks, extracted_images)

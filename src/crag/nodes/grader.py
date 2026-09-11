@@ -9,6 +9,9 @@ from src.crag.state import CRAGState
 logger = logging.getLogger(__name__)
 
 
+import re
+
+
 class GraderNode:
     """Evaluates the factual relevance of retrieved documents to the query."""
 
@@ -22,15 +25,23 @@ class GraderNode:
 
     def _grade_document(self, query: str, doc_content: str, doc_score: float) -> float:
         """Computes relevance score combining semantic vector score and lexical match."""
-        # Clean terms
-        q_terms = set(query.lower().split())
-        doc_terms = set(doc_content.lower().split())
+        stopwords = {"what", "which", "how", "much", "did", "were", "was", "the", "for", "and", "in", "is", "are", "does", "can", "you", "tell", "about", "to", "of", "a", "an"}
+        
+        q_terms = set(t.lower() for t in re.findall(r"\b\w+\b", query) if t.lower() not in stopwords and len(t) > 2)
+        doc_terms = set(t.lower() for t in re.findall(r"\b\w+\b", doc_content))
 
-        overlap = len(q_terms.intersection(doc_terms)) / max(len(q_terms), 1)
+        if not q_terms:
+            return max(doc_score, 0.5)
 
-        # Blended relevance score
-        blended_score = 0.6 * doc_score + 0.4 * overlap
-        return min(max(blended_score, 0.0), 1.0)
+        overlap = len(q_terms.intersection(doc_terms)) / len(q_terms)
+
+        # In offline/mock mode or when vector score is low, lexical key overlap is highly informative
+        if doc_score > 0.6:
+            blended = 0.5 * doc_score + 0.5 * overlap
+        else:
+            blended = max(doc_score, overlap)
+
+        return min(max(blended, 0.0), 1.0)
 
     def __call__(self, state: CRAGState) -> Dict[str, Any]:
         """Evaluates all candidate documents and assigns an overall grade."""
