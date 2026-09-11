@@ -95,10 +95,10 @@ To strictly prevent credit exhaustion, the platform enforces the following hard 
 
 - [ ] **Phase 1: Environment Setup, GCP Provisioning & Configuration Schemas**
   - [ ] Inspect and configure Google Cloud CLI (`gcloud`) authentication and project parameters.
-  - [ ] Initialize Git repository structure, pre-commit hooks, and `.gitignore`.
-  - [ ] Implement `src/config/settings.py` using `pydantic-settings` to validate GCP project ID, storage buckets, processor IDs, model names, and budget thresholds.
-  - [ ] Create `scripts/gcp_bootstrap.ps1` and `scripts/gcp_bootstrap.sh` to enable required GCP APIs (`documentai.googleapis.com`, `aiplatform.googleapis.com`, `run.googleapis.com`, `storage.googleapis.com`).
-  - [ ] Implement unit tests in `tests/unit/test_settings.py` to verify configuration loading and environment validation.
+  - [x] Initialize Git repository structure, pre-commit hooks, and `.gitignore`.
+  - [x] Implement `src/config/settings.py` using `pydantic-settings` to validate GCP project ID, storage buckets, processor IDs, model names, and budget thresholds.
+  - [x] Create `scripts/gcp_bootstrap.ps1` and `scripts/gcp_bootstrap.sh` to enable required GCP APIs (`documentai.googleapis.com`, `aiplatform.googleapis.com`, `run.googleapis.com`, `storage.googleapis.com`).
+  - [x] Implement unit tests in `tests/unit/test_settings.py` to verify configuration loading and environment validation.
 
 - [ ] **Phase 2: Document AI Layout Parsing, Table Markdown & Chart Cropping**
   - [ ] Implement `src/ingestion/docai_parser.py`: Client for Document AI Layout Parser handling PDF bytes, pagination, and tokenization.
