@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crag-api
+    ports:
+      - "8000:8080"
+    environment:
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID:-demo-gcp-project}
+      - GCP_REGION=${GCP_REGION:-us-central1}
+      - VECTOR_STORE_BACKEND=local
+      - LOCAL_VECTOR_INDEX_DIR=/app/data/vector_index
+      - PROCESSED_DATA_DIR=/app/data/processed
+      - RAW_DATA_DIR=/app/data/raw
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    restart: unless-stopped
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crag-ui
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8080
+    command: streamlit run src/ui/app.py --server.port 8501 --server.address 0.0.0.0
+    depends_on:
+      - api
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    restart: unless-stopped

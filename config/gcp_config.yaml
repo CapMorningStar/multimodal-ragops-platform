@@ -1,0 +1,36 @@
+# GCP Project and Resource Defaults
+gcp:
+  project_id: "demo-gcp-project"
+  region: "us-central1"
+  zones:
+    - "us-central1-a"
+    - "us-central1-b"
+
+document_ai:
+  location: "us"
+  processor_type: "LAYOUT_PARSER_PROCESSOR"
+  chunking:
+    max_tokens_per_chunk: 512
+    overlap_tokens: 64
+
+vertex_ai:
+  embedding_model: "multimodalembedding@001"
+  embedding_dimension: 1408
+  gemini_generation_model: "gemini-1.5-flash-002"
+  gemini_grader_model: "gemini-1.5-flash-002"
+  temperature: 0.1
+  max_output_tokens: 2048
+
+cloud_run:
+  service_name: "multimodal-crag-platform"
+  min_instances: 0
+  max_instances: 5
+  cpu: "2"
+  memory: "2Gi"
+  timeout_seconds: 300
+  concurrency: 80
+
+cost_guardrails:
+  budget_limit_usd: 300.00
+  standing_endpoints_permitted: false
+  enforce_scale_to_zero: true

@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=65.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "multimodal-crag-platform"
+version = "0.1.0"
+description = "Enterprise Corrective Multimodal RAGOps Platform on Google Cloud Platform"
+readme = "README.md"
+authors = [
+    { name = "MLOps & AI Systems Team" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.2.0",
+    "google-cloud-documentai>=2.29.0",
+    "google-cloud-aiplatform>=1.50.0",
+    "langchain-core>=0.2.10",
+    "langgraph>=0.1.8",
+    "pillow>=10.3.0",
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+    "pyarrow>=16.0.0",
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "streamlit>=1.35.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers -ra"
+markers = [
+    "unit: fast unit tests not requiring cloud resources",
+    "integration: integration tests validating service components",
+    "gcp: tests requiring active GCP credentials or network calls",
+    "ragops_benchmark: automated Ragas evaluation suite",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "B", "C4", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
