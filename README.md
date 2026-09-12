@@ -1,6 +1,30 @@
 # Enterprise Corrective Multimodal RAGOps Platform (GCP)
 
-An enterprise-grade multimodal document intelligence platform built on **Google Cloud Platform (GCP)** leveraging **Document AI Layout Parser**, **Vertex AI Multimodal Embeddings**, **LangGraph Corrective RAG (CRAG)**, **Gemini 1.5/2.0 Flash Grounding**, and **Ragas Multimodal Evaluations**.
+[![Live Cloud Run API](https://img.shields.io/badge/Google_Cloud_Run-Live_API_Docs-4285F4?logo=google-cloud&logoColor=white)](https://multimodal-crag-platform-381348374222.us-central1.run.app/docs)
+[![Loom Demo Video](https://img.shields.io/badge/Loom-Watch_Live_Demo-625DF5?logo=loom&logoColor=white)](https://www.loom.com/share/44f7e3e96d944c248fc26facb877b5a8)
+[![Tests Passing](https://img.shields.io/badge/Tests-39%2F39_Passed_(100%25)-34A853?logo=pytest&logoColor=white)](https://github.com/CapMorningStar/multimodal-ragops-platform)
+[![Zero Idle Burn](https://img.shields.io/badge/GCP_Cost_Guard-%240.00_Idle_Burn-0F9D58?logo=google-cloud)](https://github.com/CapMorningStar/multimodal-ragops-platform)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://python.org)
+
+An enterprise-grade multimodal document intelligence platform built on **Google Cloud Platform (GCP)** leveraging **Document AI Layout Parser**, **Vertex AI Multimodal Embeddings (1408-dim)**, **LangGraph Corrective RAG (CRAG)**, **Gemini 2.5 Flash Grounding**, and **Ragas CI/CD Automated Evals**.
+
+---
+
+## 🎬 Live Platform Demo
+
+[![Enterprise Multimodal CRAGOps Platform Demo](https://cdn.loom.com/sessions/thumbnails/44f7e3e96d944c248fc26facb877b5a8-3140da7f4cc8fe16.gif)](https://www.loom.com/share/44f7e3e96d944c248fc26facb877b5a8)
+
+> **[▶️ Click here to watch the full 60-second interactive demo on Loom](https://www.loom.com/share/44f7e3e96d944c248fc26facb877b5a8)**  
+> *Demonstrates grounded financial table parsing, multimodal chart image extraction, and anti-hallucination LangGraph state machine execution.*
+
+---
+
+## 🚀 Live Cloud Deployment & Interactive API Playground
+
+* **Live Production Cloud Run URL**: [https://multimodal-crag-platform-381348374222.us-central1.run.app](https://multimodal-crag-platform-381348374222.us-central1.run.app)
+* **Interactive Swagger / OpenAPI Documentation**: [https://multimodal-crag-platform-381348374222.us-central1.run.app/docs](https://multimodal-crag-platform-381348374222.us-central1.run.app/docs)
+* **Live Health Check Endpoint**: [https://multimodal-crag-platform-381348374222.us-central1.run.app/v1/health](https://multimodal-crag-platform-381348374222.us-central1.run.app/v1/health)
+* **Strict Scale-to-Zero Guardrail**: Configured with `--min-instances 0` ($0.00 idle cost, zero unmonitored credit burn).
 
 ---
 
