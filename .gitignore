@@ -42,11 +42,17 @@ credentials*.json
 # Data and Artifacts (Zero-idle-burn local storage)
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/alphabetical_corp_2026_10k.pdf
 data/processed/*
 !data/processed/.gitkeep
+!data/processed/charts
+!data/processed/charts/*.png
 data/vector_index/*
 !data/vector_index/.gitkeep
+!data/vector_index/embeddings.npy
+!data/vector_index/metadata.parquet
 *.parquet
+!data/vector_index/metadata.parquet
 *.faiss
 *.index
 
