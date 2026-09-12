@@ -165,6 +165,11 @@ flowchart TD
     - `POST /v1/query` returning grounded answers, citations, extracted chart images, CRAG state grade, and latency telemetry.
     - `POST /v1/ingest` accepting uploaded PDFs for Document AI extraction.
   - [x] Streamlit Cockpit (`src/ui/app.py`): Interactive UI displaying query results, CRAG status badges, latency metrics, LangGraph trace graph, and visual chart citations.
+  - [x] Live Cloud Run Production Deployment:
+    - Service URL: `https://multimodal-crag-platform-381348374222.us-central1.run.app`
+    - Swagger / OpenAPI Docs: `https://multimodal-crag-platform-381348374222.us-central1.run.app/docs`
+    - Health Check: `https://multimodal-crag-platform-381348374222.us-central1.run.app/v1/health`
+    - Scale-to-Zero: `--min-instances 0` ($0.00 idle cost, zero credit burn)
   - [x] 100% test coverage across API endpoints, routers, and schemas.
 
 ---
